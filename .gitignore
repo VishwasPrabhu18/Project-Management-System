@@ -1,0 +1,33 @@
+project-management-system/HELP.md
+project-management-system/target/
+project-management-system/!.mvn/wrapper/maven-wrapper.jar
+project-management-system/!**/src/main/**/target/
+project-management-system/!**/src/test/**/target/
+
+### STS ###
+project-management-system/.apt_generated
+project-management-system/.classpath
+project-management-system/.factorypath
+project-management-system/.project
+project-management-system/.settings
+project-management-system/.springBeans
+project-management-system/.sts4-cache
+
+### IntelliJ IDEA ###
+project-management-system/.idea
+project-management-system/*.iws
+project-management-system/*.iml
+project-management-system/*.ipr
+
+### NetBeans ###
+project-management-system/nbproject/private/
+project-management-system/nbbuild/
+project-management-system/dist/
+project-management-system/nbdist/
+project-management-system/.nb-gradle/
+project-management-system/build/
+project-management-system/!**/src/main/**/build/
+project-management-system/!**/src/test/**/build/
+
+### VS Code ###
+project-management-system/.vscode/
