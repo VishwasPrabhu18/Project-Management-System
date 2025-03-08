@@ -3,14 +3,17 @@ package com.vishwasprabhu18.controller;
 import com.vishwasprabhu18.config.JwtProvider;
 import com.vishwasprabhu18.modal.User;
 import com.vishwasprabhu18.repository.UserRepository;
+import com.vishwasprabhu18.request.LoginRequest;
 import com.vishwasprabhu18.response.AuthResponse;
 import com.vishwasprabhu18.service.CustomUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,9 +33,9 @@ public class AuthController {
     private CustomUserDetailsImpl customUserDetails;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> createUserHandler(@RequestBody User user) throws Exception {
+    public ResponseEntity<AuthResponse> sign_up(@RequestBody User user) throws Exception {
         User isUserExist = userRepository.findByEmail(user.getEmail());
-        if(isUserExist != null) {
+        if (isUserExist != null) {
             throw new Exception("Email already exist with another account!");
         }
 
@@ -52,6 +55,34 @@ public class AuthController {
         response.setMessage("Signup Success");
         response.setJwt(jwt);
 
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<AuthResponse> sign_in(@RequestBody LoginRequest loginRequest) throws Exception {
+        String userName = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+
+        Authentication authentication = authenticate(userName, password);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = JwtProvider.generateToken(authentication);
+
+        AuthResponse response = new AuthResponse();
+        response.setMessage("Signin Success");
+        response.setJwt(jwt);
+
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+    }
+
+    private Authentication authenticate(String userName, String password) {
+        UserDetails userDetails = customUserDetails.loadUserByUsername(userName);
+        if (userDetails == null ||
+            !passwordEncoder.matches(password, userDetails.getPassword())) {
+            throw new BadCredentialsException("invalid username or password!");
+        }
+
+        return new UsernamePasswordAuthenticationToken(userName, null, userDetails.getAuthorities());
     }
 }
