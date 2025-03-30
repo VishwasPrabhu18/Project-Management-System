@@ -33,3 +33,30 @@ project-management-system/!**/src/test/**/build/
 project-management-system/.vscode/
 
 project-management-system/src/main/resources/application.properties
+
+
+# UI Project
+# Logs
+project-management-system-ui/logs
+project-management-system-ui/*.log
+project-management-system-ui/npm-debug.log*
+project-management-system-ui/yarn-debug.log*
+project-management-system-ui/yarn-error.log*
+project-management-system-ui/pnpm-debug.log*
+project-management-system-ui/lerna-debug.log*
+
+project-management-system-ui/node_modules
+project-management-system-ui/dist
+project-management-system-ui/dist-ssr
+project-management-system-ui/*.local
+
+# Editor directories and files
+project-management-system-ui/.vscode/*
+project-management-system-ui/!.vscode/extensions.json
+project-management-system-ui/.idea
+project-management-system-ui/.DS_Store
+project-management-system-ui/*.suo
+project-management-system-ui/*.ntvs*
+project-management-system-ui/*.njsproj
+project-management-system-ui/*.sln
+project-management-system-ui/*.sw?
