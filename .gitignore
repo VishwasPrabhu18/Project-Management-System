@@ -31,3 +31,5 @@ project-management-system/!**/src/test/**/build/
 
 ### VS Code ###
 project-management-system/.vscode/
+
+project-management-system/src/main/resources/application.properties
