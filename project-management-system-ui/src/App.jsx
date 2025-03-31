@@ -1,8 +1,12 @@
-import React from 'react'
+import Home from './pages/home/Home'
+import Navbar from './pages/navbar/Navbar'
 
 const App = () => {
   return (
-    <div className='text-red-500'>App</div>
+    <>
+      <Navbar />
+      <Home />
+    </>
   )
 }
 
