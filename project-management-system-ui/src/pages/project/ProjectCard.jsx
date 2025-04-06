@@ -4,15 +4,17 @@ import { Card } from '@/components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { DotFilledIcon, DotsVerticalIcon } from '@radix-ui/react-icons'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const ProjectCard = () => {
+  const navigate = useNavigate();
   return (
     <Card className="p-5 w-full lg:max-w-3xl">
       <div className='space-y-5'>
         <div className='space-y-2'>
           <div className='flex justify-between'>
             <div className='flex items-center gap-5'>
-              <h1 className='cursor-pointer font-black text-lg'>Create Ecommorse Project</h1>
+              <h1 onClick={() => navigate(`/project/123`)} className='cursor-pointer font-black text-lg'>Create Ecommorse Project</h1>
               <DotFilledIcon />
               <p className='text-sm text-gray-400'>sdfsdf</p>
             </div>

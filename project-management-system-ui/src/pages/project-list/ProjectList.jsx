@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { CategoryList, TagsList } from '@/constants/ProjectListConsts'
+import { CategoryList, TagsList } from '@/constants/ProjectListConstant'
 import { MagnifyingGlassIcon, MixerHorizontalIcon } from '@radix-ui/react-icons'
 import React, { useState } from 'react'
 import ProjectCard from '../project/ProjectCard'
@@ -92,7 +92,7 @@ const ProjectList = () => {
           <div>
             <div className='space-y-5 min-h-[75vh]'>
               {
-                keyword ? 
+                keyword==="" ? 
                   [1, 1, 1].map(item => <ProjectCard key={item} />) :
                   [1,1,1].map(item => <div key={item}>okndfgd </div>)
               }

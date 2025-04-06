@@ -3,16 +3,19 @@ import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components
 import CreateProjectForm from '../project/CreateProjectForm';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { MixIcon, PersonIcon } from '@radix-ui/react-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className='border-b py-4 px-5 flex items-center justify-between dark'>
       <div className='flex items-center gap-3'>
-        <div className='flex items-center gap-2'>
-        <Button variant="outline" className="rounded-full">
-          <MixIcon />
-        </Button>
-        <p className='cursor-pointer font-bold text-xl'>Project Management</p>
+        <div className='flex items-center gap-2' onClick={() => navigate('/')}>
+          <Button variant="outline" className="rounded-full">
+            <MixIcon />
+          </Button>
+          <p className='cursor-pointer font-bold text-xl'>Project Management</p>
         </div>
         <Dialog>
           <DialogTrigger>
@@ -23,7 +26,7 @@ const Navbar = () => {
             <CreateProjectForm />
           </DialogContent>
         </Dialog>
-        <Button variant="ghost">Upgrade Plan</Button>
+        <Button onClick={() => navigate("/upgrade_plan")} variant="ghost">Upgrade Plan</Button>
       </div>
       <div className='flex gap-3 items-center'>
         <DropdownMenu>
