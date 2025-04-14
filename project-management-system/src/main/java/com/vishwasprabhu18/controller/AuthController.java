@@ -1,11 +1,11 @@
 package com.vishwasprabhu18.controller;
 
 import com.vishwasprabhu18.config.JwtProvider;
+import com.vishwasprabhu18.impl.UserServiceImpl;
 import com.vishwasprabhu18.modal.User;
 import com.vishwasprabhu18.repository.UserRepository;
 import com.vishwasprabhu18.request.LoginRequest;
 import com.vishwasprabhu18.response.AuthResponse;
-import com.vishwasprabhu18.service.CustomUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private CustomUserDetailsImpl customUserDetails;
+    private UserServiceImpl.CustomUserDetailsImpl customUserDetails;
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> sign_up(@RequestBody User user) throws Exception {
