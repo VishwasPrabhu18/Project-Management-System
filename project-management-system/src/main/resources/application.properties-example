@@ -1,0 +1,22 @@
+spring.application.name=Project Management System
+
+server.port=5454
+
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.url=jdbc:mysql://localhost:3306/project_management
+spring.datasource.username=<DB_NAME>
+spring.datasource.password=<DB_PASSWORD>
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.show-sql: true
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=<EMAIL_ID>
+spring.mail.password=<EMAIL_ID_PASSWORD_CREATED_BY_ADD_PASSWORD_METHOD>
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+razorpay.api.key=<RAZORPAY_API_KEY>
+razorpay.api.secret=<RAZORPAY_API_SECRET>
+
+// Add these values in application.properties file and remove this file
