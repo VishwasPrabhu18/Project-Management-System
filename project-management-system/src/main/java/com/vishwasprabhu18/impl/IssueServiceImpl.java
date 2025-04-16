@@ -37,7 +37,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public List<Issue> getIssueByProjectId(Long projectId) throws Exception {
-        return issueRepository.findByProjectById(projectId);
+        return issueRepository.findByProjectId(projectId);
     }
 
     @Override
