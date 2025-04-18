@@ -1,11 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { register } from "@/redux/auth/Action";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
+  const dispatch = useDispatch();
+
   const form = useForm({
-    // resolver: zod
     defaultValues: {
       email: "",
       password: "",
@@ -14,8 +17,9 @@ const Register = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    dispatch(register(data));
   }
+  
   return (
     <div>
       <Form {...form}>

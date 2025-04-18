@@ -5,12 +5,21 @@ import ProjectDetails from './pages/project-details/ProjectDetails'
 import IssueDetails from './pages/issue-details/IssueDetails'
 import Subscription from './pages/subscription/Subscription'
 import Auth from './pages/auth/Auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getUser } from './redux/auth/Action'
 
 const App = () => {
+  const dispatch = useDispatch();
+  const { auth } = useSelector(store => store);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [auth.jwt]);
   return (
     <>
       {
-        false ? (
+        auth.user ? (
           <div>
             <Navbar />
 

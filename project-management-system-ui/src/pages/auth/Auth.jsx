@@ -11,7 +11,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion"
 
 const Auth = () => {
-  const [isRegister, setIsRegister] = useState(true)
+  const [isRegister, setIsRegister] = useState(false)
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4">

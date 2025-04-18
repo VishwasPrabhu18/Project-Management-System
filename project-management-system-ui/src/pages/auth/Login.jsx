@@ -1,19 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { login } from "@/redux/auth/Action";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const form = useForm({
-        defaultValues: {
-          email: "",
-          password: "",
-        }
-      });
-    
-      const onSubmit = (data) => {
-        console.log(data);
-      }
+    defaultValues: {
+      email: "",
+      password: "",
+    }
+  });
+
+  const onSubmit = (data) => {
+    dispatch(login(data));
+  }
+  
   return (
     <div>
       <Form {...form}>
@@ -48,7 +53,7 @@ const Login = () => {
                 <FormMessage />
               </FormItem>}
           />
-            <Button type="submit" variant="outline" className="w-full dark">Create Issue</Button>
+          <Button type="submit" variant="outline" className="w-full dark">Create Issue</Button>
 
         </form>
       </Form>
