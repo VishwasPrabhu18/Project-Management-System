@@ -1,18 +1,22 @@
 import axioApi from "@/config/api";
-import { ACCEPT_INVITATION_REQUEST, ACCEPT_INVITATION_SUCCESS, CREATE_PROJECT_REQUEST, CREATE_PROJECT_SUCCESS, DELETE_PROJECT_REQUEST, DELETE_PROJECT_SUCCESS, FETCH_PROJECT_BY_ID_REQUEST, FETCH_PROJECT_BY_ID_SUCCESS, FETCH_PROJECTS_REQUEST, FETCH_PROJECTS_SUCCESS, INVITE_TO_PROJECT_REQUEST, INVITE_TO_PROJECT_SUCCESS, SEARCH_PROJECT_REQUEST, SEARCH_PROJECT_SUCCESS } from "./ActionType";
+import { ACCEPT_INVITATION_FAILURE, ACCEPT_INVITATION_REQUEST, ACCEPT_INVITATION_SUCCESS, CREATE_PROJECT_FAILURE, CREATE_PROJECT_REQUEST, CREATE_PROJECT_SUCCESS, DELETE_PROJECT_FAILURE, DELETE_PROJECT_REQUEST, DELETE_PROJECT_SUCCESS, FETCH_PROJECT_BY_ID_FAILURE, FETCH_PROJECT_BY_ID_REQUEST, FETCH_PROJECT_BY_ID_SUCCESS, FETCH_PROJECTS_FAILURE, FETCH_PROJECTS_REQUEST, FETCH_PROJECTS_SUCCESS, INVITE_TO_PROJECT_FAILURE, INVITE_TO_PROJECT_REQUEST, INVITE_TO_PROJECT_SUCCESS, SEARCH_PROJECT_FAILURE, SEARCH_PROJECT_REQUEST, SEARCH_PROJECT_SUCCESS } from "./ActionType";
 
-export const fetchProjects = ({ category, tags }) => async (dispatch) => {
+export const fetchProjects = ({ category, tag }) => async (dispatch) => {
   dispatch({ type: FETCH_PROJECTS_REQUEST });
   try {
     const { data } = await axioApi.get("/api/projects", {
-      params: { category, tags },
+      params: { category, tag },
     });
     dispatch({
       type: FETCH_PROJECTS_SUCCESS,
       projects: data,
     });
   } catch (error) {
-    console.error("Error fetching projects:", error);    
+    dispatch({
+      type: FETCH_PROJECTS_FAILURE,
+      error: error.response ? error.response.data : "An error occurred",
+    });
+    console.error("Error fetchProjects:", error);
   }
 }
 
@@ -25,7 +29,11 @@ export const searchProjects = ( keyword ) => async (dispatch) => {
       projects: data,
     });
   } catch (error) {
-    console.error("Error fetching projects:", error);    
+    dispatch({
+      type: SEARCH_PROJECT_FAILURE,
+      error: error.response ? error.response.data : "An error occurred",
+    });
+    console.error("Error searchProjects:", error);
   }
 }
 
@@ -38,8 +46,12 @@ export const createProject = ( projectData ) => async (dispatch) => {
       project: data,
     });
   } catch (error) {
-    console.error("Error fetching projects:", error);    
-  }
+      dispatch({
+        type: CREATE_PROJECT_FAILURE,
+        error: error.response ? error.response.data : "An error occurred",
+      });
+      console.error("Error createProject:", error);
+    }
 }
 
 export const fetchProjectById = ( projectId ) => async (dispatch) => {
@@ -51,7 +63,11 @@ export const fetchProjectById = ( projectId ) => async (dispatch) => {
       project: data,
     });
   } catch (error) {
-    console.error("Error fetching projects:", error);    
+    dispatch({
+      type: FETCH_PROJECT_BY_ID_FAILURE,
+      error: error.response ? error.response.data : "An error occurred",
+    });
+    console.error("Error fetchProjectById:", error);
   }
 }
 
@@ -64,7 +80,11 @@ export const deleteProject = ( projectId ) => async (dispatch) => {
       projectId,
     });
   } catch (error) {
-    console.error("Error fetching projects:", error);    
+    dispatch({
+      type: DELETE_PROJECT_FAILURE,
+      error: error.response ? error.response.data : "An error occurred",
+    });
+    console.error("Error deleteProject:", error);
   }
 }
 
@@ -80,7 +100,11 @@ export const inviteToProject = ( {email, projectId} ) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.error("Error fetching projects:", error);    
+    dispatch({
+      type: INVITE_TO_PROJECT_FAILURE,
+      error: error.response ? error.response.data : "An error occurred",
+    });
+    console.error("Error inviteToProject:", error);
   }
 }
 
@@ -98,6 +122,10 @@ export const acceptInvitation = ( {invitationToken, navigate} ) => async (dispat
       payload: data,
     });
   } catch (error) {
-    console.error("Error fetching projects:", error);    
+    dispatch({
+      type: ACCEPT_INVITATION_FAILURE,
+      error: error.response ? error.response.data : "An error occurred",
+    });
+    console.error("Error acceptInvitation:", error);
   }
 }
