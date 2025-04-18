@@ -4,14 +4,17 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { TagsList } from '@/constants/ProjectListConstant';
+import { CategoryList, TagsList } from '@/constants/ProjectListConstant';
+import { createProject } from '@/redux/project/Action';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux';
 
 const CreateProjectForm = () => {
+  const dispatch = useDispatch();
+
   const form = useForm({
-    // resolver: zod
     defaultValues: {
       name: "",
       description: "",
@@ -21,7 +24,8 @@ const CreateProjectForm = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    dispatch(createProject(data));
+    form.reset();
   }
 
   const handleTagChange = (tag) => {
@@ -81,9 +85,9 @@ const CreateProjectForm = () => {
                       <SelectValue placeholder="Category" />
                     </SelectTrigger>
                     <SelectContent className="dark">
-                      <SelectItem value="fullstack">Full Stack</SelectItem>
-                      <SelectItem value="frontend">Frontend</SelectItem>
-                      <SelectItem value="backend">Backend</SelectItem>
+                      {CategoryList.map((category, idx) => (
+                        <SelectItem key={idx} value={category.value}>{category.lable}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>

@@ -3,6 +3,8 @@ export const CategoryList = [
   { lable: "Full Stack", value: "fullstack" },
   { lable: "Frontend", value: "frontend" },
   { lable: "Backend", value: "backend" },
+  { lable: "AI", value: "ai" },
+  { lable: "IOT", value: "iot" },
 ];
 
 export const TagsList = [

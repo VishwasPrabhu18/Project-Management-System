@@ -8,6 +8,7 @@ import Auth from './pages/auth/Auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getUser } from './redux/auth/Action'
+import { fetchProjects } from './redux/project/Action'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getUser());
+    dispatch(fetchProjects({}));
   }, [auth.jwt]);
   return (
     <>

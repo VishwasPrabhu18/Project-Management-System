@@ -6,20 +6,40 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { CategoryList, TagsList } from '@/constants/ProjectListConstant'
 import { MagnifyingGlassIcon, MixerHorizontalIcon } from '@radix-ui/react-icons'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ProjectCard from '../project/ProjectCard'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProjects, searchProjects } from '@/redux/project/Action'
 
 const ProjectList = () => {
 
+  const { project } = useSelector(store => store);
+  const dispatch = useDispatch();
+
   const [keyword, setKeyword] = useState("");
 
-  const handleFileterChange = (filterType, value) => {
-    console.log(`Filter Type: ${filterType}, Value: ${value}`)
+  const handleFileterCategory = (value) => {
+    if (value === "all") {
+      dispatch(fetchProjects({}));
+    } else {
+      dispatch(fetchProjects({ category: value }));
+    }
+    setKeyword("");
+  }
+
+  const handleFileterTag = (value) => {
+    if (value === "all") {
+      dispatch(fetchProjects({}));
+    } else {
+      dispatch(fetchProjects({ tag: value }));
+    }
+    setKeyword("");
   }
 
   const handleSearchChange = (e) => {
-    const searchValue = e.target.value
+    const searchValue = e.target.value;
     setKeyword(searchValue);
+    dispatch(searchProjects(searchValue));
   }
 
   return (
@@ -40,14 +60,14 @@ const ProjectList = () => {
                   <div className='pt-5 '>
                     <RadioGroup
                       defaultValue='all'
-                      onValueChange={(value) => handleFileterChange("category", value)}
+                      onValueChange={(value) => handleFileterCategory(value)}
                       className="space-y-1"
                     >
                       {
                         CategoryList.map((category, idx) => (
                           <div key={category.value} className='flex gap-2 items-center'>
                             <RadioGroupItem value={category.value} id={`category${idx}`} />
-                            <Label htmlFor="category1">{category.lable}</Label>
+                            <Label htmlFor="category">{category.lable}</Label>
                           </div>
                         ))
                       }
@@ -59,14 +79,14 @@ const ProjectList = () => {
                   <div className='pt-5 '>
                     <RadioGroup
                       defaultValue='all'
-                      onValueChange={(value) => handleFileterChange("tags", value)}
+                      onValueChange={(value) => handleFileterTag(value)}
                       className="space-y-1"
                     >
                       {
                         TagsList.map((tag, idx) => (
                           <div key={tag.value} className='flex gap-2 items-center'>
                             <RadioGroupItem value={tag.value} id={`category${idx}`} />
-                            <Label htmlFor="category1">{tag.lable}</Label>
+                            <Label htmlFor="tag">{tag.lable}</Label>
                           </div>
                         ))
                       }
@@ -92,9 +112,14 @@ const ProjectList = () => {
           <div>
             <div className='space-y-5 min-h-[75vh]'>
               {
-                keyword==="" ? 
-                  [1, 1, 1].map(item => <ProjectCard key={item} />) :
-                  [1,1,1].map(item => <div key={item}>okndfgd </div>)
+                keyword !== "" ? (
+                  project?.searchProjects?.map((item, idx) => <ProjectCard key={idx*Date.now()} project={item} />)
+                ) : (
+                    project?.projects?.map((item, idx) => (
+                      <ProjectCard key={idx} project={item} />
+                    ))
+                )
+                  
               }
             </div>
           </div>
