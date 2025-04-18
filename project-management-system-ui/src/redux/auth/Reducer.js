@@ -1,5 +1,8 @@
 import {
-  GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_REQUEST, REGISTER_SUCCESS
+  GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE,
+  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
+  LOGOUT,
+  REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE  
 } from "./ActionType"
 
 const initialState = {
@@ -20,7 +23,7 @@ export const authReducer = (state = initialState, action) => {
         loading: true,
         error: null,
       };
-    
+
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       return {
@@ -29,7 +32,7 @@ export const authReducer = (state = initialState, action) => {
         error: null,
         jwt: action.payload.jwt,
       };
-    
+
     case GET_USER_SUCCESS:
       return {
         ...state,
@@ -37,10 +40,19 @@ export const authReducer = (state = initialState, action) => {
         error: null,
         user: action.payload,
       };
-    
+
     case LOGOUT:
       return initialState;
-    
+
+    case REGISTER_FAILURE:
+    case LOGIN_FAILURE:
+    case GET_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+
     default: return state;
   }
 }
