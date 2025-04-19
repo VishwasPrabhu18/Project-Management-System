@@ -2,11 +2,9 @@ import { GET_USER_SUBSCRIPTION_FAILURE, GET_USER_SUBSCRIPTION_REQUEST, GET_USER_
 
 
 const initialState = {
-  projects: [],
   loading: false,
   error: null,
-  projectDetails: null,
-  searchProjects: [],
+  userSubscription: null,
 }
 
 export const subscriptioneReducer = (state = initialState, action) => {

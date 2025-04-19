@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { CategoryList, TagsList } from '@/constants/ProjectListConstant'
+import { CategoryList, TagsList } from '@/constants/ProjectIssueConstant'
 import { deleteProject } from '@/redux/project/Action'
 import { DotFilledIcon, DotsVerticalIcon } from '@radix-ui/react-icons'
 import { useDispatch } from 'react-redux'
@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom'
 const ProjectCard = ({ project }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   return (
     <Card className="p-5 w-full lg:max-w-3xl">
       <div className='space-y-5'>

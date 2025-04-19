@@ -4,10 +4,9 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { CategoryList, TagsList } from '@/constants/ProjectListConstant';
+import { CategoryList, TagsList } from '@/constants/ProjectIssueConstant';
 import { createProject } from '@/redux/project/Action';
 import { Cross1Icon } from '@radix-ui/react-icons';
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux';
 

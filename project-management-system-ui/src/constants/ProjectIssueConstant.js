@@ -18,3 +18,15 @@ export const TagsList = [
   { lable: "Python", value: "python" },
   { lable: "Flask", value: "flask" }
 ];
+
+export const PriorityList = [
+  { lable: "High", value: "high" },
+  { lable: "Medium", value: "medium" },
+  { lable: "Low", value: "low" }
+];
+
+export const IssueStatusList = [
+  { lable: "Todo", value: "pending" },
+  { lable: "In Progress", value: "in_progress" },
+  { lable: "Done", value: "done" }
+];

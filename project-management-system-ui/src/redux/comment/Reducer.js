@@ -8,7 +8,6 @@ const initialState = {
   comments: [],
   loading: false,
   error: null,
-  chat: null,
 }
 
 export const commentReducer = (state = initialState, action) => {

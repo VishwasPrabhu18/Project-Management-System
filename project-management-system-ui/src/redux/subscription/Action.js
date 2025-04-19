@@ -10,7 +10,7 @@ import {
 export const getUserSubscription = (jwt) => async (dispatch) => {
   dispatch({ type: GET_USER_SUBSCRIPTION_REQUEST });
   try {
-    const { data } = await axioApi.get(`/api/subscriptions/user`, {
+    const { data } = await axioApi.get(`/api/subscription/user`, {
       headers: {
         "Authorization": `Bearer ${jwt}`,
       },

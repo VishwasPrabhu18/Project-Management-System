@@ -20,7 +20,7 @@ export const fetchProjects = ({ category, tag }) => async (dispatch) => {
   }
 }
 
-export const searchProjects = ( keyword ) => async (dispatch) => {
+export const searchProjects = (keyword) => async (dispatch) => {
   dispatch({ type: SEARCH_PROJECT_REQUEST });
   try {
     const { data } = await axioApi.get("/api/projects/search?keyword=" + keyword);
@@ -37,7 +37,7 @@ export const searchProjects = ( keyword ) => async (dispatch) => {
   }
 }
 
-export const createProject = ( projectData ) => async (dispatch) => {
+export const createProject = (projectData) => async (dispatch) => {
   dispatch({ type: CREATE_PROJECT_REQUEST });
   try {
     const { data } = await axioApi.post("/api/projects", projectData);
@@ -46,15 +46,15 @@ export const createProject = ( projectData ) => async (dispatch) => {
       project: data,
     });
   } catch (error) {
-      dispatch({
-        type: CREATE_PROJECT_FAILURE,
-        error: error.response ? error.response.data : "An error occurred",
-      });
-      console.error("Error createProject:", error);
-    }
+    dispatch({
+      type: CREATE_PROJECT_FAILURE,
+      error: error.response ? error.response.data : "An error occurred",
+    });
+    console.error("Error createProject:", error);
+  }
 }
 
-export const fetchProjectById = ( projectId ) => async (dispatch) => {
+export const fetchProjectById = (projectId) => async (dispatch) => {
   dispatch({ type: FETCH_PROJECT_BY_ID_REQUEST });
   try {
     const { data } = await axioApi.get("/api/projects/" + projectId);
@@ -71,7 +71,7 @@ export const fetchProjectById = ( projectId ) => async (dispatch) => {
   }
 }
 
-export const deleteProject = ( projectId ) => async (dispatch) => {
+export const deleteProject = (projectId) => async (dispatch) => {
   dispatch({ type: DELETE_PROJECT_REQUEST });
   try {
     await axioApi.delete("/api/projects/" + projectId);
@@ -88,12 +88,16 @@ export const deleteProject = ( projectId ) => async (dispatch) => {
   }
 }
 
-export const inviteToProject = ( {email, projectId} ) => async (dispatch) => {
+export const inviteToProject = ({ email, projectId }) => async (dispatch) => {
   dispatch({ type: INVITE_TO_PROJECT_REQUEST });
   try {
     const { data } = await axioApi.post("/api/projects/invite", {
       email,
       projectId,
+    }, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
     });
     dispatch({
       type: INVITE_TO_PROJECT_SUCCESS,
@@ -108,12 +112,16 @@ export const inviteToProject = ( {email, projectId} ) => async (dispatch) => {
   }
 }
 
-export const acceptInvitation = ( {invitationToken, navigate} ) => async (dispatch) => {
+export const acceptInvitation = ({ invitationToken, navigate }) => async (dispatch) => {
   dispatch({ type: ACCEPT_INVITATION_REQUEST });
   try {
-    const { data } = await axioApi.get("/api/projects/accept_invitation", {
+    const { data } = await axioApi.post("/api/projects/accept_invitation", null, {
       params: {
         token: invitationToken,
+      }
+    }, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
     navigate("/projects/" + data.projectId);

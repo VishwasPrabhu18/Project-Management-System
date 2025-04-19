@@ -4,7 +4,7 @@ import { FETCH_CHAT_BY_PROJECT_FAILURE, FETCH_CHAT_BY_PROJECT_REQUEST, FETCH_CHA
 export const sendMessage = (messageData) => async (dispatch) => {
   dispatch({ type: SEND_MESSAGE_REQUEST });
   try {
-    const { data } = await axioApi.post("/api/message/send", messageData);
+    const { data } = await axioApi.post("/api/messages/send", messageData);
     dispatch({
       type: SEND_MESSAGE_SUCCESS,
       message: data,
@@ -24,7 +24,7 @@ export const fetchChatByProject = (projectId) => async (dispatch) => {
     const { data } = await axioApi.get(`/api/projects/${projectId}/chat`);
     dispatch({
       type: FETCH_CHAT_BY_PROJECT_SUCCESS,
-      message: data,
+      chat: data,
     });
   } catch (error) {
     dispatch({
@@ -41,7 +41,7 @@ export const fetchChatMessages = (chatId) => async (dispatch) => {
     const { data } = await axioApi.get(`/api/messages/chat/${chatId}`);
     dispatch({
       type: FETCH_CHAT_MESSAGE_SUCCESS,
-      message: data,
+      messages: data,
     });
   } catch (error) {
     dispatch({

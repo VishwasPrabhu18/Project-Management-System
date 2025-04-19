@@ -1,11 +1,10 @@
 import { ASSIGNED_ISSUE_TO_USER_FAILURE, ASSIGNED_ISSUE_TO_USER_REQUEST, ASSIGNED_ISSUE_TO_USER_SUCCESS, CREATE_ISSUE_FAILURE, CREATE_ISSUE_REQUEST, CREATE_ISSUE_SUCCESS, DELETE_ISSUE_FAILURE, DELETE_ISSUE_REQUEST, DELETE_ISSUE_SUCCESS, FETCH_ISSUE_BY_ID_FAILURE, FETCH_ISSUE_BY_ID_REQUEST, FETCH_ISSUE_BY_ID_SUCCESS, FETCH_ISSUE_FAILURE, FETCH_ISSUE_REQUEST, FETCH_ISSUE_SUCCESS, UPDATE_ISSUE_STATUS_FAILURE, UPDATE_ISSUE_STATUS_REQUEST, UPDATE_ISSUE_STATUS_SUCCESS } from "./ActionType";
 
 const initialState = {
-  projects: [],
+  issues: [],
   loading: false,
   error: null,
-  projectDetails: null,
-  searchProjects: [],
+  issueDetails: null,
 }
 
 export const issueReducer = (state = initialState, action) => {
@@ -44,7 +43,7 @@ export const issueReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        issues: [...state.issues, action.issue],
+        issues: [...state.issues, action.issues],
       }
 
     case ASSIGNED_ISSUE_TO_USER_SUCCESS:
