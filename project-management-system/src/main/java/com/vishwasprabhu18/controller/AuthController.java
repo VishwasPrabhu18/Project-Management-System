@@ -79,7 +79,6 @@ public class AuthController {
         response.setJwt(jwt);
 
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-
     }
 
     private Authentication authenticate(String userName, String password) {

@@ -11,6 +11,7 @@ import com.vishwasprabhu18.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,6 +34,7 @@ public class MessageServiceImpl implements MessageService {
         Message message = new Message();
         message.setContent(content);
         message.setSender(sender);
+        message.setCreatedAt(LocalDateTime.now());
         message.setChat(chat);
 
         Message savedMessage = messageRepository.save(message);

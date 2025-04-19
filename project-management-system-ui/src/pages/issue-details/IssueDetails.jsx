@@ -6,22 +6,36 @@ import CommentCard from "./CommentCard";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchIssueById, updateIssueStatus } from "@/redux/issue/Action";
+import { IssueStatusList } from "@/constants/ProjectIssueConstant";
+import { PersonIcon } from "@radix-ui/react-icons";
+import { fetchComments } from "@/redux/comment/Action";
 
 const IssueDetails = () => {
   const { issueId } = useParams();
+  const dispatch = useDispatch();
+  const { issuesDetails } = useSelector(store => store.issue);
+  const { comments } = useSelector(store => store.comment);
 
   const handleUpdateIssueStatus = (value) => {
-    console.log(value);
+    dispatch(updateIssueStatus({ issueId: issueId, status: value }));
   }
+
+  useEffect(() => {
+    dispatch(fetchIssueById(issueId));
+    dispatch(fetchComments(issueId));
+  }, [issueId]);
 
   return (
     <div className="px-20 py-8 text-gray-400">
       <div className="flex justify-between border p-10 rounded-lg">
         <ScrollArea className="h-[80vh] w-[60%]">
-          <h1 className="text-lg font-semibold text-gray-400">Create Navbar</h1>
+          <h1 className="text-lg font-semibold text-gray-400">{issuesDetails?.title}</h1>
           <div className="py-5">
             <h2 className="font-semibold text-gray-400">Description</h2>
-            <p className="text-gray-400 text-sm mt-3">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus reiciendis atque eligendi eius aperiam neque natus quis expedita inventore aut!</p>
+            <p className="text-gray-400 text-sm mt-3">{issuesDetails?.description}</p>
           </div>
 
           <div className="mt-5">
@@ -39,7 +53,7 @@ const IssueDetails = () => {
                 <CreateCommentForm issueId={issueId} />
                 <div className="mt-5 space-y-6">
                   {
-                    [1, 1, 1].map((item) => <CommentCard key={item} />)
+                    comments?.map(comment => <CommentCard key={comment?.id} comment={comment} />)
                   }
                 </div>
               </TabsContent>
@@ -50,12 +64,12 @@ const IssueDetails = () => {
           </div>
         </ScrollArea>
         <div className="w-full lg:w-[30%] space-y-2">
-          <Select onValueChange={handleUpdateIssueStatus}>
+          <Select onValueChange={handleUpdateIssueStatus} value={issuesDetails?.status}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Todo" />
             </SelectTrigger>
             <SelectContent className="dark">
-              <SelectItem value="todo">Todo</SelectItem>
+              <SelectItem value="pending">Todo</SelectItem>
               <SelectItem value="in_progress">In Progress</SelectItem>
               <SelectItem value="done">Done</SelectItem>
             </SelectContent>
@@ -67,12 +81,23 @@ const IssueDetails = () => {
               <div className="space-y-7">
                 <div className="flex gap-10 items-center">
                   <p className="w-[7rem]">Assignee</p>
-                  <div className="flex items-center gap-3">
-                    <Avatar className="dark h-8 w-8 text-xs">
-                      <AvatarFallback>V</AvatarFallback>
-                    </Avatar>
-                    <p>Vishwas Prabhu</p>
-                  </div>
+                  {
+                    issuesDetails?.assignee !== null ? (
+                      <div className="flex items-center gap-3">
+                        <Avatar className="dark h-8 w-8 text-xs">
+                          <AvatarFallback>{issuesDetails?.assignee?.fullName.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <p>{issuesDetails?.assignee?.fullName}</p>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-3">
+                        <Avatar className="dark h-8 w-8 text-xs rotate-180">
+                          <AvatarFallback><PersonIcon /></AvatarFallback>
+                        </Avatar>
+                        <p>Unassigned</p>
+                      </div>
+                    )
+                  }
                 </div>
                 <div className="flex gap-10 items-center">
                   <p className="w-[7rem]">Labels</p>
@@ -80,11 +105,15 @@ const IssueDetails = () => {
                 </div>
                 <div className="flex gap-10 items-center">
                   <p className="w-[7rem]">Status</p>
-                  <Badge>In Progress</Badge>
+                  <Badge>
+                    {
+                      IssueStatusList.find(item => item.value === issuesDetails?.status)?.lable
+                    }
+                  </Badge>
                 </div>
                 <div className="flex gap-10 items-center">
                   <p className="w-[7rem]">Release</p>
-                  <p>05-04-2025</p>
+                  <p>{issuesDetails?.dueDate}</p>
                 </div>
                 <div className="flex gap-10 items-center">
                   <p className="w-[7rem]">Reporter</p>
